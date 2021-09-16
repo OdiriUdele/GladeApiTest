@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Role;
 use App\User;
-use App\UserRole;
+use App\RoleUser;
 
 class SuperAdminRoleSeeder extends Seeder
 {
@@ -34,7 +34,7 @@ class SuperAdminRoleSeeder extends Seeder
                 ]
             );
 
-            UserRole::firstOrCreate(
+            RoleUser::firstOrCreate(
                 [
                     'user_id' =>   $superAdmin->id,
                     'role_id' =>   $superRole->id,
