@@ -15,7 +15,7 @@ class AdminCRUDController extends Controller
 
     public function __construct(){
 
-        $this->middleware('check-role:superadmin,admin');
+        $this->middleware('check-role:superadmin');
         
     }
 

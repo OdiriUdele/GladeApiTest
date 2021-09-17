@@ -30,7 +30,7 @@ Route::namespace('Api')->group(function () {
         });
 
         Route::prefix('/admin')->group(function () {
-            Route::post('/create', 'AdminCRUDController@create');//create admin user
+            Route::post('/create', 'AdminCRUDController@create')->middleware(['superadmin']);//create admin user
             Route::post('/delete/{admin}', 'AdminCRUDController@delete')->middleware(['superadmin']);//delete admin user
         });
 
