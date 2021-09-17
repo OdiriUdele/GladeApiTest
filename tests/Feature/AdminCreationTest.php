@@ -20,7 +20,7 @@ class AdminCreationTest extends TestCase
     {
         $this->loginSuperAdmin();
 
-        $this->json('POST', 'api/create-admin')
+        $this->json('POST', 'api/admin/create')
             ->assertStatus(422)
             ->assertJson([
                 "message" => "The given data was invalid.",
@@ -40,7 +40,7 @@ class AdminCreationTest extends TestCase
             "password" => "demo12345"
         ];
 
-       $this->json('POST', 'api/create-admin', $userData)
+       $this->json('POST', 'api/admin/create', $userData)
             ->assertStatus(422)
             ->assertJson([
                 "message" => "The given data was invalid.",
@@ -60,7 +60,7 @@ class AdminCreationTest extends TestCase
             "password_confirmation" => "demo12345"
         ];
 
-        $this->json('POST', 'api/create-admin', $userData, ['Accept' => 'application/json'])
+        $this->json('POST', 'api/admin/create', $userData, ['Accept' => 'application/json'])
             ->assertStatus(201)
             ->assertJsonStructure([
                 "data" => [

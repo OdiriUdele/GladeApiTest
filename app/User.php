@@ -106,13 +106,26 @@ class User extends Authenticatable implements JWTSubject, UserRoleInterface
      */ 
     public function hasRole($role)
     {
-       if ($this->roles()->where('name',$role)) {
+        if ($this->roles()->where('name',$role)->first()) {
            return true;
-       }
+        }
        return false;
     } 
 
     public function roles(){
         return $this->belongsToMany('App\Role');
     }
+
+    public function createdCompanies(){
+        return $this->hasMany('App\Company', 'created_by', 'id');
+    }
+
+    public function company(){
+        return $this->HasOne('App\Company', 'company_admin_user');
+    }
+
+    public function employee(){
+        return $this->HasOne('App\Employee', 'employee_user_id');
+    }
+
 }

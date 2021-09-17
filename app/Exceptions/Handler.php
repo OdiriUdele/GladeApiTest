@@ -51,9 +51,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
 
-        if (request()->is('api/*') || $request->wantsJson()) {   
-
-            $exception = $this->prepareException($exception);
+        if (request()->is('api/*') || $request->wantsJson()) {  
 
             return $this->handleApiException($request, $exception);
 
@@ -67,6 +65,8 @@ class Handler extends ExceptionHandler
     //handle Api Exceptions
     private function handleApiException($request, $exception)
     {
+
+        $exception = $this->prepareException($exception);
 
         if ($exception instanceof \Illuminate\Http\Exception\HttpResponseException) {
             $exception = $exception->getResponse();
@@ -87,6 +87,7 @@ class Handler extends ExceptionHandler
     //customize exception message by status code
     private function customApiResponse($exception)
     {
+
         if (method_exists($exception, 'getStatusCode')) {
             $statusCode = $exception->getStatusCode();
         } else {
@@ -105,7 +106,7 @@ class Handler extends ExceptionHandler
                 $response['message'] = 'Forbidden !!! '.$exception->getMessage() ;
                 break;
             case 404:
-                $response['message'] = 'Not Found';
+                $response['message'] = 'Resource(s)/Route Not Found. ('.$exception->getMessage().')';
                 break;
             case 405:
                 $response['message'] = 'Method Not Allowed';

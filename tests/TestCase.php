@@ -6,6 +6,7 @@ namespace Tests;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\User;
 use JWTAuth;
 
 abstract class TestCase extends BaseTestCase
@@ -32,5 +33,42 @@ abstract class TestCase extends BaseTestCase
         parent::actingAs($user);
         
         return $this;
+    }
+
+    public function loginAdmin(){
+        $user = User::where('email','superadmin@admin.com')->first();
+
+        $this->actingAs($user);
+    }
+
+    public function successfulCompanyCreation()
+    {
+
+        $this->loginAdmin();
+
+        $companyData = [
+            "name" => "test Company",
+        ];
+
+        $response = $this->json('POST', 'api/company/create', $companyData);
+          
+        return $response['data']['id'];
+    }
+
+    public function successfulEmployeeCreation()
+    {
+        $this->loginAdmin();
+
+        $companyId =  $this->successfulCompanyCreation();
+
+        $employeeData = [
+            "first_name" => "testOdiri",
+            "last_name" => "testUdele",
+            "company" => $companyId
+        ];
+
+        $response = $this->json('POST', 'api/employee/create', $employeeData);
+           
+        return [$companyId, $response['data']['id']];
     }
 }

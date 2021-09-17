@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\AdminCreateRequest;
@@ -22,7 +23,10 @@ class CreateAdminController extends Controller
     public function createAdmin(AdminCreateRequest $request){
 
         DB::beginTransaction();
+        
         try {
+
+            $request["password"] = bcrypt($request->password);
 
             $user = User::Create($request->all()); //store user information
 
@@ -36,7 +40,6 @@ class CreateAdminController extends Controller
 
         } catch (\Exception $e) {
             DB::rollback();
-            \Log::info($e);
             return $this->respondWithError( "Something went wrong.");
         }
     }
