@@ -23,7 +23,7 @@ class AdminFetchOperationsController extends Controller
 
             $companies = Company::orderBy('created_at', 'DESC')->paginate(10);
 
-            $companyResource =  π::collection($companies);
+            $companyResource =  CompanyResource::collection($companies);
             
             return $companyResource
                         ->additional([
