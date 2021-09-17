@@ -14,7 +14,7 @@ I made use of Requests, Resources, Tests, Interface and services.
 
 ## Testing and Validation
 
-Validation will check that the matrices follow the principle of A matrix columns equaling B matrix rows. If this validation fails an error is returned
+Validation will ensure that only authenticated users can use the api and  that only authorized users can carry out certain operations.
 
 Testing will ensure the code is written to accomodate scenarios and that the code can be writen to satisfy these test and remain functional.
 
