@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Api')->group(function () {
 
     Route::post('/login', 'LoginController@login');//login user
+    Route::post('/logout','LogoutController@logout')->middleware(['jwt.verify','jwt.auth']);//logout user
 
-    Route::middleware(['jwt.verify'])->group(function () {
+    Route::middleware(['jwt.verify','jwt.auth'])->group(function () {
 
         Route::middleware(['check-role:company,employee'])->group(function () {
 
@@ -34,9 +35,9 @@ Route::namespace('Api')->group(function () {
         });
 
         Route::prefix('/ops')->group(function () {
-            Route::get('/fetch-companies', 'AdminOperationsController@fetchCompanies');//fetch all companies
-            Route::get('/fetch-employees', 'AdminOperationsController@fetchEmployees');//fetch all employees
-            Route::get('/{company}/fetch-employees', 'AdminOperationsController@fetchCompanyEmployees');//fetch all company employees
+            Route::get('/fetch-companies', 'AdminFetchOperationsController@fetchCompanies');//fetch all companies
+            Route::get('/fetch-employees', 'AdminFetchOperationsController@fetchEmployees');//fetch all employees
+            Route::get('/{company}/fetch-employees', 'AdminFetchOperationsController@fetchCompanyEmployees');//fetch all company employees
         });
 
         Route::prefix('/company')->group(function () {
@@ -52,6 +53,9 @@ Route::namespace('Api')->group(function () {
             Route::post('/update/{employee}', 'EmployeeController@update')->middleware(['superadmin']);//update employee
             Route::post('/delete/{employee}', 'EmployeeController@delete')->middleware(['superadmin']);//delete employee
         });
+
+        Route::post('/company/audit', 'CompanyCreationAuditController@audit');//Superadmin see whhich Admin created a company
+
     });
 
 });

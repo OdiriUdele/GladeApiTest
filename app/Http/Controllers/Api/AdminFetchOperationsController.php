@@ -9,7 +9,7 @@ use App\Http\Resources\EmployeeResourceCollection;
 use App\Company;
 use App\Employee;
 
-class AdminOperationsController extends Controller
+class AdminFetchOperationsController extends Controller
 {
 
     public function __construct(){
@@ -23,7 +23,7 @@ class AdminOperationsController extends Controller
 
             $companies = Company::orderBy('created_at', 'DESC')->paginate(10);
 
-            $companyResource =  CompanyResource::collection($companies);
+            $companyResource =  π::collection($companies);
             
             return $companyResource
                         ->additional([
