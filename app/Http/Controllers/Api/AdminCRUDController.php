@@ -10,17 +10,17 @@ use App\Http\Resources\Api\UserResource;
 use App\User;
 use DB;
 
-class CreateAdminController extends Controller
+class AdminCRUDController extends Controller
 {
 
     public function __construct(){
 
-        $this->middleware('superadmin');
+        $this->middleware('check-role:superadmin,admin');
         
     }
 
     //create admin user
-    public function createAdmin(AdminCreateRequest $request){
+    public function create(AdminCreateRequest $request){
 
         DB::beginTransaction();
         
@@ -39,6 +39,34 @@ class CreateAdminController extends Controller
             return $this->respondCreated($userResource,"Admin Created Successfully");
 
         } catch (\Exception $e) {
+            DB::rollback();
+            return $this->respondWithError( "Something went wrong.");
+        }
+    }
+
+
+    public function delete(User $admin){
+        
+        DB::beginTransaction();
+
+        try {
+
+            if(!$admin->hasRole('admin')){
+                return $this->respondWithError( "User is not an Admin.", 422);
+            }
+            $admin->roles()->detach();
+
+            $admin->delete();
+
+            $response['status'] = true;
+            $response['message'] = 'Admin User Deleted succesfully.';
+
+            DB::commit();
+
+            return $this->respond($response);
+
+        } catch (\Exception $e) {
+            \Log::info($e);
             DB::rollback();
             return $this->respondWithError( "Something went wrong.");
         }

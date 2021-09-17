@@ -73,7 +73,7 @@ class CompanyController extends Controller
 
         try {
             $response['status'] = true;
-            $response['message'] = "Company Records Fetched Successfully.";
+            $response['message'] = 'Company Records Fetched Successfully.';
             $response['data'] = new CompanyResource($company);
 
             return $this->respond($response);
@@ -94,7 +94,7 @@ class CompanyController extends Controller
             $companyUpdate = $company->update($this->companyService->buildCompanyData());   
 
             $response['status'] = true;
-            $response['message'] = "Company Updated succesfully.";
+            $response['message'] = 'Company Updated succesfully.';
             $response['data'] = new CompanyResource($company->refresh());
 
             DB::commit();
@@ -119,7 +119,7 @@ class CompanyController extends Controller
             $company->delete(); 
 
             $response['status'] = true;
-            $response['message'] = "Company Deleted succesfully.";
+            $response['message'] = 'Company Deleted succesfully.';
 
             DB::commit();
 

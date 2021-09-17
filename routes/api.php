@@ -19,11 +19,24 @@ Route::namespace('Api')->group(function () {
 
     Route::middleware(['jwt.verify'])->group(function () {
 
-        Route::get('/employee/all', 'ViewCompanyEmployeesController@viewEmployeesByCompanyAccount');
+        Route::middleware(['check-role:company,employee'])->group(function () {
+
+            // fetch employees with company account
+            Route::get('/employee/all', 'CompanyAndEmployeeController@viewEmployeesByCompanyAccount')->middleware(['check-role:company']);
+
+            //fetch company info with employee account
+            Route::get('/company/info', 'CompanyAndEmployeeController@viewCompanyByEmployeeAccount')->middleware(['check-role:employee']);
+        });
 
         Route::prefix('/admin')->group(function () {
-            Route::post('/create', 'CreateAdminController@createAdmin');//create admin user
-            Route::post('/delete', 'CreateAdminController@deleteteAdmin');//create admin user
+            Route::post('/create', 'AdminCRUDController@create');//create admin user
+            Route::post('/delete/{admin}', 'AdminCRUDController@delete')->middleware(['superadmin']);//delete admin user
+        });
+
+        Route::prefix('/ops')->group(function () {
+            Route::get('/fetch-companies', 'AdminOperationsController@fetchCompanies');//fetch all companies
+            Route::get('/fetch-employees', 'AdminOperationsController@fetchEmployees');//fetch all employees
+            Route::get('/{company}/fetch-employees', 'AdminOperationsController@fetchCompanyEmployees');//fetch all company employees
         });
 
         Route::prefix('/company')->group(function () {
@@ -35,8 +48,8 @@ Route::namespace('Api')->group(function () {
 
         Route::prefix('/employee')->group(function () {
             Route::post('/create', 'EmployeeController@create');//create employee
-            Route::get('/fetch/{employee}', 'EmployeeController@read')->middleware(['superadmin']);;//fetch employee info
-            Route::post('/update/{employee}', 'EmployeeController@update')->middleware(['superadmin']);;//update employee
+            Route::get('/fetch/{employee}', 'EmployeeController@read')->middleware(['superadmin']);//fetch employee info
+            Route::post('/update/{employee}', 'EmployeeController@update')->middleware(['superadmin']);//update employee
             Route::post('/delete/{employee}', 'EmployeeController@delete')->middleware(['superadmin']);//delete employee
         });
     });

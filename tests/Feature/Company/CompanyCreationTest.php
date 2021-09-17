@@ -11,11 +11,6 @@ use App\User;
 
 class CompanyCreationTest extends TestCase
 {
-    public function loginAdmin(){
-        $user = User::where('email','superadmin@admin.com')->first();
-
-        $this->actingAs($user);
-    }
 
     public function testRequiredFieldsForUpdate()
     {

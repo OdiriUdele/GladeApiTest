@@ -70,7 +70,7 @@ class EmployeeController extends Controller
 
         try {
             $response['status'] = true;
-            $response['message'] = "Employee Records Fetched Successfully.";
+            $response['message'] = 'Employee Records Fetched Successfully.';
             $response['data'] = new EmployeeResource($employee);
 
             return $this->respond($response);
@@ -92,7 +92,7 @@ class EmployeeController extends Controller
             ]);
 
             $response['status'] = true;
-            $response['message'] = "Employee Updated succesfully.";
+            $response['message'] = 'Employee Updated succesfully.';
             $response['data'] = new EmployeeResource($employee->refresh());
 
             DB::commit();
@@ -117,7 +117,7 @@ class EmployeeController extends Controller
             $employee->delete();  
 
             $response['status'] = true;
-            $response['message'] = "Employee Deleted succesfully.";
+            $response['message'] = 'Employee Deleted succesfully.';
 
             DB::commit();
 

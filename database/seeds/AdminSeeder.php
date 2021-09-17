@@ -17,6 +17,10 @@ class AdminSeeder extends Seeder
                 'email' =>   "firstadmin@admin.com",
                 'password' =>   bcrypt("password"),
             ],
+            [
+                'email' =>   "uniqueadmin@admin.com",
+                'password' =>   bcrypt("password"),
+            ],
         ]);
     }
 }

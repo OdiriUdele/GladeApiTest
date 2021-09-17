@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class SuperAdminLoginTest extends TestCase
+class LoginTest extends TestCase
 {
 
     public function testRequiresEmailAndLogin()
@@ -39,8 +39,14 @@ class SuperAdminLoginTest extends TestCase
 
         $response
             ->assertStatus(200)
+            ->assertJsonStructure([
+                "token",
+                "token_type",
+                "token_expires_in"
+            ])
             ->assertJson([
                 'status' => true,
+                'message' => "Login Successful",
                 "user" => [
                     "email" => "superadmin@admin.com"
                 ]

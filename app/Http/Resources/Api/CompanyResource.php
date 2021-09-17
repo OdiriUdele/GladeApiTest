@@ -15,14 +15,14 @@ class CompanyResource extends JsonResource
      */
     public function toArray($request)
     {
-        static::$wrap = "company_information";
+        static::$wrap = "data";
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'website' => $this->website,
             'logo' => $this->logo,
-            'company_user' => new UserResource($this->user)
+            'company_user' => $this->when(auth()->user()->hasAnyRole(['superadmin','admin']), new UserResource($this->user))
 
         ];
     }

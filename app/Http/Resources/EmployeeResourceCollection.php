@@ -16,6 +16,7 @@ class EmployeeResourceCollection extends JsonResource
      */
     public function toArray($request)
     {
+        static::$wrap = "data";
         return[
                 'id' => $this->id,
                 'first_name' => $this->first_name,
@@ -24,7 +25,6 @@ class EmployeeResourceCollection extends JsonResource
                 'phone' => $this->phone,
                 'company' => $this->companyData->name,
                 'employee_user' => $this->when(auth()->user()->hasAnyRole(['superadmin','admin']), new UserResource($this->user))
-                
             ];
     }
 

@@ -48,6 +48,7 @@ abstract class TestCase extends BaseTestCase
 
         $companyData = [
             "name" => "test Company",
+            "email" => "test@testcompany.com",
         ];
 
         $response = $this->json('POST', 'api/company/create', $companyData);
@@ -64,6 +65,7 @@ abstract class TestCase extends BaseTestCase
         $employeeData = [
             "first_name" => "testOdiri",
             "last_name" => "testUdele",
+            "email" => "odiriudele@test.com",
             "company" => $companyId
         ];
 

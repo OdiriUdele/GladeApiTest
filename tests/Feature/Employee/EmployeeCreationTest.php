@@ -11,12 +11,6 @@ class EmployeeCreationTest extends TestCase
 {
     protected $companyId;
 
-    public function loginAdmin(){
-        $user = User::where('email','superadmin@admin.com')->first();
-
-        $this->actingAs($user);
-    }
-
     public function testRequiredFieldsForCreation()
     {
         $this->loginAdmin();

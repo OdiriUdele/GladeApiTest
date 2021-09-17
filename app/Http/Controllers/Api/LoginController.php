@@ -25,7 +25,7 @@ class LoginController extends Controller
             $user = User::where('email',$request->email)->first(); //fetch user
             
             $response['status'] = true;
-            $response['message'] = "Login Successful";
+            $response['message'] = 'Login Successful';
             $response['token'] = $token;
             $response['token_type'] = 'bearer';
             $response['token_expires_in'] = auth()->factory()->getTTL() * 60;
