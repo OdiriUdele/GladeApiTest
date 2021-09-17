@@ -1,61 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
+## BackendApi Test (GLADE)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This is a laravel application that takes into account user roles for certain operations to be carried out. User can create Admin, Company and Employes as well as perform other functions on these resources.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Tools Used:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Laravel Framework => ^7.29
+- Laravel tymon/jwt-auth=> "^1.0. (For Authentication)
+- Php => 7.4.15).
 
-## Learning Laravel
+I made use of Requests, Resources, Tests, Interface and services.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Testing and Validation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Validation will check that the matrices follow the principle of A matrix columns equaling B matrix rows. If this validation fails an error is returned
 
-## Laravel Sponsors
+Testing will ensure the code is written to accomodate scenarios and that the code can be writen to satisfy these test and remain functional.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Setup
 
-### Premium Partners
+- Clone repo
+- Run composer intall/update
+- copy .env.example to .env
+- Run Php artisan key:generate
+- Run Php Artisan jwt:secret
+- Run Php Artisan migrate.
+- Run Php Artisan db:seed.
+- Run Php Artisan storage:link.
+## Test Setup
+- Run <b>php artisan config:cache</b>
+- Run <b>php artisan config:clear</b>
+- TO RUN TESTS USE 'composer test' or (vendor/bin/phpunit)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+## API Documentation
+This application at the time of this writing has some  endpoints for authentication and for performing CRUD Operations on Employee and Company Resources'. To view the parameter requirements and expected return values, check out the API documentation from the postman documenter url below.<br>
+**[Api Documentation Url ](https://documenter.getpostman.com/view/7533984/U16qJ2u4)**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+##Scope
+-  Ability to create admin user accounts. The only permission this account type will have is
+to create companies and employees. Nothing else.
+- Use database seeds to create first user with email superadmin@admin.com and
+password “password”
+- CRUD functionality (Create / Read / Update / Delete) for two menu items: Companies
+and Employees.
+- Companies DB table consists of these fields: Name (required), email, logo (minimum
+100×100), website
+- Employees DB table consists of these fields: First name (required), last name (required),
+Company (foreign key to Companies), email, phone
+- Use database migrations to create those schemas above
+- Store companies logos in storage/app/public folder and make them accessible from
+public
+- Use Laravel’s validation function, using Request classes
+- A company account should be able to login and view all their employees
+- An employee should be able to login and view their company’s details
+- Company can create employee account
+- Admin can create employee and company account
+- Super admin can create and delete admin, company, employee accounts.
+- Superadmin and admin account should be able to see all companies and employees
+- Superadmin account should be able to see which admin created a company. Like an
+audit trail.
+- Use Laravel’s pagination for showing Companies/Employees list, 10 entries per page
+- Email notification: send email whenever new company is entered (use Mailgun or
+Mailtrap)
+- Roles this application will have are superadmin, admin, company and employee.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
